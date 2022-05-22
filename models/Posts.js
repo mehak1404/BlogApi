@@ -5,12 +5,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     desc: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(10000),
       allowNull: false,
-    },
-    photo: {
-      type: DataTypes.STRING,
-      allowNull: true,
     },
     username: {
       type: DataTypes.STRING,

@@ -5,6 +5,8 @@ app.use(express.json());
 
 const db = require("./models");
 
+
+
 // // Routers
 
 app.get("/", (req, res)=>{
@@ -13,10 +15,13 @@ app.get("/", (req, res)=>{
 const postRouter = require("./routes/posts");
 app.use("/posts", postRouter);
 
-const usersRouter = require("./routes/Users");
+const usersRouter = require("./routes/users");
 app.use("/user", usersRouter);
 
-
+const commentRouter = require("./routes/comments");
+app.use("/comments", commentRouter);
+const likesRouter = require("./routes/likes");
+app.use("/likes", likesRouter);
  
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {

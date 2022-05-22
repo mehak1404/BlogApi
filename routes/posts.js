@@ -42,18 +42,20 @@ router.get("/byuserId/:id", async (req, res) => {
     }
 });
 
-router.post("/",  async (req, res) => {
+router.post("/create",  async (req, res) => {
     try{
-        post.username = req.user.username;
-        post.UserId = req.user.id;
+
+        const post = req.body;
+        post.username = req.body.username;
+        post.UserId = req.body.UserId;
         await Posts.create(post);
         res.json(post);
         
     }
     catch(err){
-        res.status(402).json(err);
+        res.status(400).json(err);
     }
-    const post = req.body;
+    // const post = req.body;
 });
 
 router.put("/title", async (req, res) => {
