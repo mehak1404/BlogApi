@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const { Posts, Likes } = require("../models");
+const Comments = require("../models/Comments");
 
 
 router.get("/", async (req, res) => {
   try{
 
       const listOfPosts = await Posts.findAll({ include: [Likes] });
-      const likedPosts = await Likes.findAll({ where: { UserId: req.user.id } });
-      res.status(200).json({ listOfPosts: listOfPosts, likedPosts: likedPosts });
+      res.status(200).json({ listOfPosts: listOfPosts });
   } 
   catch(err){
         res.status(402).json(err);
   } 
 });
-
+// get blogs by post id
 router.get("/byId/:id", async (req, res) => {
     try{
 
@@ -26,7 +26,7 @@ router.get("/byId/:id", async (req, res) => {
         res.status(402).json(err);
     }
 });
-
+//get post by user id
 router.get("/byuserId/:id", async (req, res) => {
     try{
 
@@ -58,6 +58,7 @@ router.post("/create",  async (req, res) => {
     // const post = req.body;
 });
 
+//updating title
 router.put("/title", async (req, res) => {
     try{
 
@@ -81,7 +82,7 @@ router.put("/postText", async (req, res) => {
         res.status(402).json(err);
     }
 });
-
+// Delete by post id 
 router.delete("/:postId", async (req, res) => {
     try{
 
@@ -93,6 +94,17 @@ router.delete("/:postId", async (req, res) => {
         });
       
         res.json("DELETED SUCCESSFULLY");
+    }
+    catch(err){
+        res.status(402).json(err);
+    }
+});
+// Delete all
+router.delete("/", async (req, res) => {
+    try{
+        await Posts.destroy({ where: { } }).then(res.json("DELETED SUCCESSFULLY"));
+      
+        
     }
     catch(err){
         res.status(402).json(err);
